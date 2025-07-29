@@ -1,6 +1,6 @@
 # Travel Planner API
 
-Welcome! This is a GraphQL API for travel nerds, built with Node.js and TypeScript. It helps you find cities, check the weather, and figure out if you should be surfing, skiing, or just hiding indoors. No frontend as per brief(even though I was tempted to rop one in), just a clean-ish, testable backend.
+Welcome! This is a GraphQL API for travel nerds, built with Node.js and TypeScript. It helps you find cities, check the weather, and figure out if you should be surfing, skiing, or just hiding indoors. No frontend as per brief(even though I was tempted to rope one in), just a clean-ish, testable backend.
 
 ## Note on .env File
 
