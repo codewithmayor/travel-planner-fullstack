@@ -1,0 +1,55 @@
+{
+  "name": "travel-planner-api-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/graphql/server.ts",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development ts-node src/graphql/server.ts",
+    "start": "cross-env NODE_ENV=production node dist/graphql/server.js",
+    "test": "jest --coverage",
+    "lint": "eslint . --ext .ts",
+    "dev:ui": "concurrently \"npm run dev\" \"npm run ui\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codewithmayor/travel-planner-api-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codewithmayor/travel-planner-api-test/issues"
+  },
+  "homepage": "https://github.com/codewithmayor/travel-planner-api-test#readme",
+  "devDependencies": {
+    "@types/supertest": "^6.0.3",
+    "@types/validator": "^13.15.2",
+    "cross-env": "^10.0.0",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@apollo/server": "^5.0.0",
+    "@types/express": "^5.0.3",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.1.0",
+    "@types/node-fetch": "^2.6.12",
+    "dataloader": "^2.2.3",
+    "dotenv": "^17.2.1",
+    "dotenv-safe": "^9.1.0",
+    "eslint": "^9.32.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
+    "graphql": "^16.11.0",
+    "graphql-depth-limit": "^1.1.0",
+    "helmet": "^8.1.0",
+    "husky": "^9.1.7",
+    "jest": "^30.0.5",
+    "nock": "^14.0.7",
+    "node-fetch": "^3.3.2",
+    "prettier": "^3.6.2",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.0",
+    "validator": "^13.15.15",
+    "zod": "^4.0.13"
+  }
+}
