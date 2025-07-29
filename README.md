@@ -11,6 +11,8 @@ Yeah, you’ll see a `.env` file in this repo. For this take-home, it’s just b
 ## Quick Start
 
 ```bash
+npm install
+
 npm run dev
 ```
 
