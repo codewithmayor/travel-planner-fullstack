@@ -2,26 +2,21 @@
 
 Welcome! This is a GraphQL API for travel nerds, built with Node.js and TypeScript. It helps you find cities, check the weather, and figure out if you should be surfing, skiing, or just hiding indoors. No frontend as per brief(even though I was tempted to rop one in), just a clean-ish, testable backend.
 
+## Note on .env File
+
+Yeah, you’ll see a `.env` file in this repo. For this take-home, it’s just boring config: a public API URL, a port, and the environment. No secrets, no keys, nothing you could use to hack my bank account.
+
+**In real projects, I wouldn't  do this.** Even a newbie dev knows never to commit real secrets or API keys, and to use `.gitignore` and a secrets manager. But for this demo, it’s harmless and makes setup easier.
+
 ## Quick Start
 
 ```bash
-touch .env
 npm run dev
 ```
 
-Your playground is at [http://localhost:4000/](http://localhost:4000/). Pop open the GraphQL explorer and go wild.
+Your playground is at [http://localhost:4000/]. Pop open the GraphQL explorer and play around.
 
-## Environment Variables
-
-You’ll need a `.env` file. Here’s what to put in it:
-
-```bash
-OPEN_METEO_BASE_URL=https://api.open-meteo.com
-PORT=4000
-NODE_ENV=development
-```
-
-## What’s This Thing Do?
+## What Does This Thing Do?
 
 - **City Search:** Type a few letters, get city suggestions. Powered by Open-Meteo’s geocoding.
 - **Weather:** 7-day forecasts for any city you pick.
@@ -121,7 +116,7 @@ Variables:
 { "cityId": "2643743" }
 ```
 
-Try weird cities, empty queries, or nonsense IDs. See what breaks. (It shouldn’t.)
+Try weird cities, empty queries, or wrong city IDs. If you use a bad city ID, you’ll get a friendly "City not found" error. That’s by design!
 
 ## Security Stuff
 
@@ -144,7 +139,7 @@ Try weird cities, empty queries, or nonsense IDs. See what breaks. (It shouldn�
 - No Redis (but ready for it)
 - No Docker (add it if you want)
 - No UI (API only)
-- Time-boxed to 2-3 hours—kept it lean
+- Time-boxed to 2-3 hours, tried my best to kept it lean
 
 ## Production Notes
 
@@ -164,4 +159,4 @@ Try weird cities, empty queries, or nonsense IDs. See what breaks. (It shouldn�
 
 ---
 
-Built for a backend engineering assessment. It’s clean, testable, and ready for you to break (or extend). 
+Overall, I think it’s clean-ish, testable, and ready for you to break (or extend). Thank you for the opportunity!
