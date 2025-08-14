@@ -17,6 +17,8 @@ export type WeatherForecast = {
     temperatureMin: number;
     precipitation: number;
     weatherCode: number;
+    windSpeed: number;
+    uvIndex: number;
   }>;
 };
 

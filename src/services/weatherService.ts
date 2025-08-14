@@ -20,6 +20,8 @@ export const getWeatherForecast = async (cityId: string): Promise<WeatherForecas
       temperatureMin: daily.temperature_2m_min[i],
       precipitation: daily.precipitation_sum[i],
       weatherCode: daily.weathercode[i],
+      windSpeed: daily.windspeed_10m_max[i] || 0,
+      uvIndex: daily.uv_index_max[i] || 0,
     })),
   };
 }; 

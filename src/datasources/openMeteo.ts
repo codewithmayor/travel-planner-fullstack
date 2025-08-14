@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import fetch from 'node-fetch';
 
 const BASE_URL = process.env.OPEN_METEO_BASE_URL || 'https://api.open-meteo.com';
 const GEOCODING_URL = 'https://geocoding-api.open-meteo.com';
@@ -28,6 +29,8 @@ const weatherSchema = z.object({
     temperature_2m_min: z.array(z.number()),
     precipitation_sum: z.array(z.number()),
     weathercode: z.array(z.number()),
+    windspeed_10m_max: z.array(z.number()),
+    uv_index_max: z.array(z.number()),
   }),
 });
 
@@ -72,7 +75,7 @@ class OpenMeteoDataSource {
     const key = `weather:${lat},${lon}`;
     const cached = this.getCache(key);
     if (cached) return cached;
-    const url = `${BASE_URL}/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode&forecast_days=7&timezone=auto`;
+    const url = `${BASE_URL}/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode,windspeed_10m_max,uv_index_max&forecast_days=7&timezone=auto`;
     const data = await this.fetchWithRetry(url);
     const parsed = weatherSchema.safeParse(data);
     if (!parsed.success) throw new Error('Invalid weather response');

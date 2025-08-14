@@ -14,6 +14,8 @@ export const typeDefs = `
     temperatureMin: Float!
     precipitation: Float!
     weatherCode: Int!
+    windSpeed: Float!
+    uvIndex: Float!
   }
 
   type WeatherForecast {
@@ -27,9 +29,29 @@ export const typeDefs = `
     reason: String!
   }
 
+  type HealthCheck {
+    status: String!
+    responseTime: Float
+  }
+
+  type Health {
+    status: String!
+    timestamp: String!
+    uptime: Float!
+    version: String!
+    checks: HealthChecks!
+  }
+
+  type HealthChecks {
+    database: HealthCheck!
+    externalApi: HealthCheck!
+    cache: HealthCheck!
+  }
+
   type Query {
     suggestCities(query: String!): [CitySuggestion!]!
     weather(cityId: ID!): WeatherForecast!
     activities(cityId: ID!): [ActivityRanking!]!
+    health: Health!
   }
 `; 
