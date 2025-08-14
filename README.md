@@ -86,7 +86,7 @@ The backend uses Jest with comprehensive coverage of services, datasources, and 
 ```bash
 npm test                    # Run all backend tests with coverage
 npm test -- --verbose      # Run with detailed output
-npm test -- --testPathPattern="activityService"  # Run specific test files
+npm test -- --testPathPatterns="activityService"  # Run specific test files
 ```
 
 **What's Tested:**
@@ -102,12 +102,15 @@ The frontend uses Jest with React Testing Library for component and utility test
 cd frontend
 npm test                    # Run all frontend tests
 npm test -- --watch        # Run in watch mode
-npm test -- --testPathPattern="locationUtils"  # Run specific test files
+npm test -- --testPathPatterns="locationUtils"  # Run specific test files
 ```
 
 **What's Tested:**
+- **Utilities**: Location calculations, distance formatting, and geolocation handling (22 tests)
+- **Location Services**: Geolocation API integration, permission handling, and error scenarios
+
+**What's NOT Tested (Frontend Testing Gaps):**
 - **Components**: React component rendering and user interactions
-- **Utilities**: Location calculations, distance formatting, and geolocation handling
 - **GraphQL Integration**: Apollo Client queries and error handling
 - **User Experience**: Form inputs, loading states, and error displays
 
