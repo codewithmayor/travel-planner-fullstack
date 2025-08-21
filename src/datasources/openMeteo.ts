@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import fetch from 'node-fetch';
+import https from 'node:https';
+import dnsPromises from 'node:dns/promises';
 
 const BASE_URL = process.env.OPEN_METEO_BASE_URL || 'https://api.open-meteo.com';
 const GEOCODING_URL = 'https://geocoding-api.open-meteo.com';
@@ -34,15 +35,68 @@ const weatherSchema = z.object({
   }),
 });
 
+async function httpsJsonViaIPv4(urlString: string, timeoutMs = 10000): Promise<any> {
+  const urlObj = new URL(urlString);
+  const originalHost = urlObj.hostname;
+  const pathWithQuery = `${urlObj.pathname}${urlObj.search}`;
+
+  const lookup = await dnsPromises.lookup(originalHost, { family: 4 });
+
+  const options: https.RequestOptions = {
+    host: lookup.address,
+    servername: originalHost,
+    method: 'GET',
+    path: pathWithQuery,
+    headers: {
+      Host: originalHost,
+      'User-Agent': 'TravelPlanner/1.0',
+      Accept: 'application/json',
+    },
+    timeout: timeoutMs,
+  };
+
+  return new Promise((resolve, reject) => {
+    const req = https.request(options, (res) => {
+      const statusCode = res.statusCode || 0;
+      const chunks: Uint8Array[] = [];
+
+      res.on('data', (d) => chunks.push(d));
+      res.on('end', () => {
+        const body = Buffer.concat(chunks).toString('utf-8');
+        if (statusCode < 200 || statusCode >= 300) {
+          reject(new Error(`HTTP ${statusCode}: ${res.statusMessage || ''}`));
+          return;
+        }
+        try {
+          const json = JSON.parse(body);
+          resolve(json);
+        } catch (e) {
+          reject(new Error('Failed to parse JSON response'));
+        }
+      });
+    });
+
+    req.on('timeout', () => {
+      req.destroy(new Error('Request timeout'));
+    });
+    req.on('error', (e) => reject(e));
+    req.end();
+  });
+}
+
 class OpenMeteoDataSource {
   private async fetchWithRetry(url: string, retries = 2): Promise<any> {
     for (let i = 0; i <= retries; i++) {
       try {
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return await res.json();
-      } catch (err) {
-        if (i === retries) throw err;
+        return await httpsJsonViaIPv4(url);
+      } catch (err: unknown) {
+        if (i === retries) {
+          if (err instanceof Error) {
+            throw new Error(`Network error: ${err.message || (err as any).code || 'Unknown error'}`);
+          } else {
+            throw new Error(`Unknown error occurred: ${String(err)}`);
+          }
+        }
         await sleep(200 * (i + 1));
       }
     }

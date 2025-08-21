@@ -6,9 +6,11 @@ import { resolvers } from './resolvers';
 import dotenv from 'dotenv';
 import { z } from 'zod';
 import { applyHelmet, applyRateLimit, depthLimitRule } from '../security';
+import dns from 'node:dns';
 
 // Load and validate env
 dotenv.config();
+dns.setDefaultResultOrder('ipv4first');
 const envSchema = z.object({
   OPEN_METEO_BASE_URL: z.string().url().default('https://api.open-meteo.com'),
   PORT: z.string().regex(/^\d+$/).default('4000'),
